@@ -1,30 +1,32 @@
+"""Translation en-fr and fr-en"""
+
 import json
-from ibm_watson import LanguageTranslatorV3
-from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 import os
 from dotenv import load_dotenv
+from ibm_watson import LanguageTranslatorV3
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
 load_dotenv()
-
-apikey = os.environ['rzQU50_N2tufIr97-AT3ktZtfHrQHdWWAZjaFBy9JDZP']
-url = os.environ['https://api.us-south.language-translator.watson.cloud.ibm.com/instances/e384ba1e-7e98-4a4f-af72-26183562720c']
+apikey = os.environ('apikey')
+url = os.environ('url')
 
 authenticator = IAMAuthenticator('apikey')
 language_translator = LanguageTranslatorV3(
     version='2018-05-01',
     authenticator=authenticator
 )
-
 language_translator.set_service_url('url')
 
-def englishToFrench(englishText):
-    frenchText = language_translator.translate(
-    text = englishText,
+def english_to_french(english_text):
+    """Translate from English to French"""
+    french_text = language_translator.translate(
+    text = english_text,
     model_id='en-fr').get_result()
-    return frenchText
+    return french_text
 
-def frenchToEnglish(frenchText):
-    englishText = language_translator.translate(
-    text = frenchText,
+def french_to_english(french_text):
+    """Translate from French to English"""
+    english_text = language_translator.translate(
+    text = french_text,
     model_id='fr-en').get_result()
-    return englishText
+    return english_text
